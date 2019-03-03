@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- <link rel="icon" href="../../../../favicon.ico"> -->
+
+  <title>Report Automation</title>
+
+  <!-- Jquery core JS -->
+  <script src="/javascripts/jquery-3.3.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap core JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- Custom styles for this template -->
+  <link href="/stylesheets/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+  <form class="form-signin" id="loginForm" action="/onboard/login" method="post">
+    <img class="mb-4" src="/images/HungamaIcon.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Hungama Report Automation System</h1>
+    
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+    
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+    
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 16px;">Sign in</button>
+    
+    <div class="signupContainer">
+      <button style="float:left; color:rgb(0,127,246);" type="button" class="btn btn-link" data-toggle="modal"
+        data-target="#firstTimeModal">Sign Up</button>
+      <button style="float:right; color:rgb(0,127,246);" type="button" class="btn btn-link" data-toggle="modal"
+        data-target="#forgotPasswordModal">Forgot Password?</button>
+    </div>
+    <div class="loginErrorContainer">
+        <p id="loginError" style="visibility:hidden;"><br/></p>
+    </div>
+
+    <p class="mt-5 mb-3 text-muted">Copyrights &copy; 2019 Hungama Digital Media Entertainment Pvt. Ltd.</p>
+  </form>
+
+
+  <div class="modal fade" id="firstTimeModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header text-center"
+          style="border-top-left-radius: 5px;border-top-right-radius: 5px; background-color:#0055fd;color: white;">
+          <h5 class="modal-title w-100">Activate your Account</h5>
+        </div>
+        <div class="modal-body">
+          <form class="form-signin" id="activationForm">
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="activationEmail" name="email" class="form-control" placeholder="Registered email address" required
+              autofocus>
+
+            <button class="btn btn-primary" type="submit" style="margin-top: 16px;">Send Activation Link</button>
+            <div class="activationErrorContainer">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="forgotPasswordModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header text-center"
+          style="border-top-left-radius: 5px;border-top-right-radius: 5px; background-color:#0055fd;color: white;">
+          <h5 class="modal-title w-100">Forgot Username/Password</h5>
+        </div>
+        <div class="modal-body">
+          <form class="form-signin" id="forgotPasswordForm">
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="forgotEmail" name="email" class="form-control" placeholder="Registered email address" required
+              autofocus>
+
+            <button class="btn btn-primary" type="submit" style="margin-top: 16px;">Send Password Reset Link</button>
+            <div class="forgotErrorContainer">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+<script>
+$("#loginForm").submit(function (event) {
+		event.preventDefault(); 
+		var post_url = $(this).attr("action"); 
+		var request_method = $(this).attr("method"); 
+		var form_data = $(this).serialize(); 
+		$.ajax({
+			url: post_url,
+			type: request_method,
+			data: form_data,
+			headers: {
+				'Content-Type': "application/x-www-form-urlencoded",
+				'Content-Length': form_data.length
+			}
+		}).done(function (response) {
+			if(response.status == 500) {
+				$('#loginError').text(response.message);
+			document.getElementById('loginError').style.visibility = "visible";
+		} else if(response.status == 200) {
+			sessionStorage.setItem("token",response.token);
+			sessionStorage.setItem("role",response.role);
+			
+			var redirectionForm = document.createElement('form');
+			redirectionForm.setAttribute('id', 'redirectionForm');
+			redirectionForm.setAttribute('method', 'post');
+			redirectionForm.setAttribute('action', response.redirectTo);
+				var hiddenToken = document.createElement('input');
+				hiddenToken.setAttribute('name', 'token');
+				hiddenToken.setAttribute('value', response.token);
+				redirectionForm.appendChild(hiddenToken);
+				document.body.appendChild(redirectionForm);
+				redirectionForm.submit();
+			}
+		});
+	});
+</script>
+
+</html>
