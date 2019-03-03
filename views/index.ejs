@@ -127,7 +127,8 @@ $("#loginForm").submit(function (event) {
 			redirectionForm.setAttribute('action', response.redirectTo);
 				var hiddenToken = document.createElement('input');
 				hiddenToken.setAttribute('name', 'token');
-				hiddenToken.setAttribute('value', response.token);
+        hiddenToken.setAttribute('value', response.token);
+        hiddenToken.setAttribute('type', 'hidden');
 				redirectionForm.appendChild(hiddenToken);
 				document.body.appendChild(redirectionForm);
 				redirectionForm.submit();
