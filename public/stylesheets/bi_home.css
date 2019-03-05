@@ -1,0 +1,48 @@
+html,
+body {
+  height: 100%;
+}
+
+#page-content {
+  flex: 1 0 auto;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
+
+body {
+    background:linear-gradient(0deg,rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url("../images/bi_home_bg.png");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+    font-family: 'Muli', sans-serif;
+} 
+
+.teamNameHeader {
+  margin-top: 8px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  background: rgb(51, 58, 63);
+  color:#fff;
+}
+
+.reportUploadForm {
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #000;
+}
+
+.form-control {
+  margin-top: 8px;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}

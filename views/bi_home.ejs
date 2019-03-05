@@ -1,0 +1,187 @@
+<html>
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <!-- <link rel="icon" href="../../../../favicon.ico"> -->
+              
+                <title>Report Automation</title>
+              
+                <!-- Jquery core JS -->
+                <script src="/javascripts/jquery-3.3.1.min.js"></script>
+                
+                <!-- Bootstrap core CSS -->
+                <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+              
+                <!-- Bootstrap core JS -->
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+              
+                <!-- Bootstrap datepicker  -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"> 
+
+                <!-- Custom styles -->
+                <link href="/stylesheets/bi_home.css" rel="stylesheet">
+    
+                <!-- Custom font (Muli) -->
+                <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+                
+              </head>
+    <body>
+
+        <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+                <img src="/images/Hungama.png" width="160px;" alt="">
+              </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home
+                      <span class="sr-only">(current)</span>
+                    </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      
+          <!-- Page Content -->
+      <div class="container">
+            <div id="formContainer" style="background: #fff;  border-radius: 25px; margin-top: 24px;">
+                <div class="teamNameHeader">
+                    <div class="row">
+                        <div class="container">
+                                <div class="col-md-3">
+                                        <h2 class="mt-2" style="margin-left: 16px;">MIS & BI</h2>
+                                    </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="reportUploadForm">
+
+                        <div class="row" style="margin-top:12px;">
+                            <div class="col-md-4">
+                                    <span class="form-label">Select Label</span>
+                                    <select class="form-control" id="sel1">
+                                            <option>Binaca Tunes Media Pvt. Ltd.</option>
+                                          </select>
+                            </div>
+                            <div class="col-md-4">
+                                    <span class="form-label">Select Deals</span>
+                                    <select class="form-control" id="sel1">
+                                            <option>CRBT for International Telcos</option>
+                                          </select>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:24px;">
+                                <div class="col-md-3">
+                                        <span class="form-label">Select Client</span>
+                                        <select class="form-control" id="sel1">
+                                                <option>Mauritius Telecom</option>
+                                              </select>
+                                </div>
+                                <div class="col-md-3">
+                                        <span class="form-label">Select Origin</span>
+                                        <select class="form-control" id="sel1">
+                                                <option>International</option>
+                                              </select>
+                                </div>
+                                <div class="col-md-3">
+                                        <span class="form-label">Select Service</span>
+                                        <select class="form-control" id="sel1">
+                                                <option>CRBT</option>
+                                              </select>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                        <button type="button" class="btn btn-info" style="margin-top: 32px;">Add Client</button>
+                                </div>
+                            </div>
+
+                            <div id="clientsContainer">
+                            </div>
+
+                            <div class="row" style="margin-top:24px;">
+                                    <div class="col-md-3">
+                                            <span class="form-label">Report Type</span>
+                                            <div class="radio" style="margin-top:12px;">
+                                                    <label><input type="radio" name="optradio" checked>Complete</label>
+                                                    <label style="margin-left: 16px;"><input type="radio" name="optradio">Partial</label>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <span class="form-label">Report From</span>
+                                            <input type="text" id="fromDateField" class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
+                                            <span class="form-label">Report To</span>
+                                            <input type="text" id="toDateField" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:24px;">
+                                        <div class="col-md-4">
+                                                <span class="form-label">Select Report</span>
+                                                <input type="file" id="excel" class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-info" style="margin-top: 32px;">Upload File</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                                <button type="button" class="btn btn-info" style="margin-top: 32px; margin-left: -32px;" disabled>Preview (after upload)</button>
+                                            </div>
+                                </div>
+
+                                <div class="row" style="margin-top:42px;">
+                                        <div class="col-md-5">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-primary" >Submit Report</button>
+                                        </div>
+                                        <div class="col-md-5">
+                                            </div>
+                                </div>
+                                <br/>
+                    </div>                        
+                </div>
+            </div>            
+          </div>
+          <!-- /.container -->
+    
+      <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+            <div class="container text-center">
+              <small>Copyrights &copy; 2019 Hungama Digital Media Entertainment Pvt. Ltd.</small>
+            </div>
+          </footer>
+    </body>
+
+<script type="text/javascript">
+		$(document).ready(function () {
+            $('#fromDateField').datepicker({
+                format: 'dd/mm/yyyy'
+            });
+            $('#toDateField').datepicker({
+                format: 'dd/mm/yyyy'
+            });
+        });
+
+</script>
+</html>

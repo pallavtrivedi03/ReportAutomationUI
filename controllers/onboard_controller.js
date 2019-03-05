@@ -14,6 +14,7 @@ fetch({
     query: `query {
         login(email:"${username}",password:"${password}") {
           userId
+          role
           token
           tokenExpiration
         }
