@@ -2,8 +2,10 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     var token;
-    if(req.headers.token){
-      token = req.headers.token;
+    console.log(req.headers);
+    
+    if(req.headers.authorization){
+      token = req.headers.authorization;
     }
     else if(req.query.token){
       token = req.query.token;

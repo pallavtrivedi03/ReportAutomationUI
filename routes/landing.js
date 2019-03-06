@@ -1,6 +1,6 @@
 const express = require('express');
-
 const router = express.Router();
+const biController = require('../controllers/bi_controller');
 
 router.get('/', function(req, res, next) {
     res.render('404');
@@ -27,5 +27,8 @@ router.post('/', function(req, res, next) {
       }
 });
 
+router.get('/labelsAndClients', function(req, res, next) {
+  biController.getLabelsAndClients(req,res);
+});
 
 module.exports = router;
