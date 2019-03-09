@@ -10,26 +10,34 @@ module.exports.getLabelsAndClients = function (req, response) {
 
 fetch({
     query: `query {
-        labels {
-            agreement_number
-            vendor
-            effective_date
-            end_date
-            deal
-          }
-      }`
+      labels {
+        _id
+        vendor
+        agreements {
+          agreementNumber
+          effectiveDate
+          endDate
+          deal
+        }
+      }
+    }`
   }).then(res => {
     if(res.data) {
         let labels = res.data.labels;
         fetch({
             query: `query {
-                clients {
-                    client
-                  territory
-                  origin
-                  service_name
+              clients {
+                _id
+                client
+                services {
+                  name
+                  regionInfo {
+                    origin
+                    territory
+                  }
                 }
-              }`
+              }
+            }`
           }).then(result => {
             if(result.data) {
                 let clients = result.data.clients;

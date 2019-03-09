@@ -31,4 +31,21 @@ router.get('/labelsAndClients', function(req, res, next) {
   biController.getLabelsAndClients(req,res);
 });
 
+router.post("/uploadReport", upload.single('fileName'), function (req, res) {
+
+  console.log("Request received");
+  //text fields
+  console.log(req.body);
+
+  //file contents
+  console.log(req.file);
+
+  console.log(String(req.file.buffer));
+ 
+  res.json({status: 200, message: "Success"});
+
+});
+
+
+
 module.exports = router;

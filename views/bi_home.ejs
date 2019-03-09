@@ -84,12 +84,12 @@
                                         <div class="row" style="margin-top:12px;">
                                                 <div class="col-md-4">
                                                         <span class="form-label">Select Label</span>
-                                                        <select class="form-control" id="labelSelectControl">
+                                                        <select class="form-control" id="labelSelectControl" name="labelSelectControl">
                                                         </select>
                                                 </div>
                                                 <div class="col-md-4">
                                                         <span class="form-label">Select Deals</span>
-                                                        <select class="form-control" id="dealSelectControl">
+                                                        <select class="form-control" id="dealSelectControl" name="dealSelectControl">
                                                                 <option>NA</option>
                                                         </select>
                                                 </div>
@@ -98,48 +98,50 @@
                                         <div class="row" style="margin-top:24px;">
                                                 <div class="col-md-3">
                                                         <span class="form-label">Select Client</span>
-                                                        <select class="form-control" id="clientSelectControl1">
-                                                        </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                        <span class="form-label">Select Origin</span>
-                                                        <select class="form-control" id="originSelectControl1">
-                                                                <option>International</option>
+                                                        <select class="form-control" id="clientSelectControl1" name="clientSelectControl1">
                                                         </select>
                                                 </div>
                                                 <div class="col-md-3">
                                                         <span class="form-label">Select Service</span>
-                                                        <select class="form-control" id="serviceSelectControl1">
+                                                        <select class="form-control" id="serviceSelectControl1" name="serviceSelectControl1">
                                                                 <option>CRBT</option>
+                                                        </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <span class="form-label">Select Origin</span>
+                                                        <select class="form-control" id="originSelectControl1" name="originSelectControl1">
+                                                                <option>International</option>
                                                         </select>
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                        <button type="button" class="btn btn-info"
-                                                                style="margin-top: 32px;">Add Client</button>
+                                                        <button type="button" class="btn btn-info" id="addClientButton"
+                                                                style="margin-top: 32px;" onclick="didClickOnAddClient()">Add Client</button>
                                                 </div>
                                         </div>
 
                                         <div id="clientsContainer">
+                                                <div class="row" id="clientRow2" ></div>
+                                                <div class="row" id="clientRow3" ></div>
                                         </div>
 
                                         <div class="row" style="margin-top:24px;">
                                                 <div class="col-md-3">
                                                         <span class="form-label">Report Type</span>
                                                         <div class="radio" style="margin-top:12px;">
-                                                                <label><input type="radio" name="optradio"
+                                                                <label><input type="radio" name="reportType"
                                                                                 checked>Complete</label>
-                                                                <label style="margin-left: 16px;"><input type="radio"
+                                                                <label style="margin-left: 16px;"><input type="reportType"
                                                                                 name="optradio">Partial</label>
                                                         </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                         <span class="form-label">Report From</span>
-                                                        <input type="text" id="fromDateField" class="form-control">
+                                                        <input type="text" id="fromDateField" name="fromDateField" class="form-control">
                                                 </div>
                                                 <div class="col-md-3">
                                                         <span class="form-label">Report To</span>
-                                                        <input type="text" id="toDateField" class="form-control">
+                                                        <input type="text" id="toDateField" name="toDateField" class="form-control">
                                                 </div>
                                         </div>
 
@@ -197,6 +199,14 @@
 
                 $(document).on('change', '#labelSelectControl', function () {
                         updateDealsControl($('#labelSelectControl').val());
+                });
+
+                $(document).on('change', '#clientSelectControl1', function () {
+                        updateServiceControl1($('#clientSelectControl1').val());
+                });
+
+                $(document).on('change', '#serviceSelectControl1', function () {
+                        updateOriginControl1($('#clientSelectControl1').val(),$('#serviceSelectControl1').val());
                 });
         });
 
