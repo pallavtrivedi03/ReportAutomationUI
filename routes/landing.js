@@ -52,4 +52,10 @@ router.post("/uploadReport", upload.single('file'), function (req, res) {
 
 });
 
+router.post("/submitReport", function (req, res) {
+  console.log(req.headers.reportjson);
+  console.log(req.body);
+  res.json({status:200,message:"Success"});
+});
+
 module.exports = router;

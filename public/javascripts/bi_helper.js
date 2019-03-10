@@ -66,6 +66,26 @@ function progress(e) {
   }
 }
 
+function getFormattedDate(date) {
+  var dateObj = new Date(1900, 0, date);
+  
+  var month = new Array();
+  month[0] = "Jan";
+  month[1] = "Feb";
+  month[2] = "Mar";
+  month[3] = "Apr";
+  month[4] = "May";
+  month[5] = "Jun";
+  month[6] = "Jul";
+  month[7] = "Aug";
+  month[8] = "Sep";
+  month[9] = "Oct";
+  month[10] = "Nov";
+  month[11] = "Dec";
+
+  var dateString = (month[dateObj.getMonth()]) + "-" + dateObj.getFullYear();
+  return dateString;
+}
 // Action Methods
 function didClickOnAddClient() {
   if (numberOfClients === 3) {
@@ -158,7 +178,7 @@ function didClickOnUploadButton()  {
         }
         return myXhr;
       },
-      success: function(response){
+      success: function(response) {
           parsedReportJson = JSON.parse(response); 
       }
    });
@@ -170,8 +190,9 @@ function didClickOnPreviewButton() {
   $('#previewModal').modal('toggle');
   var records = parsedReportJson.data[2];  
   var maxRecordCount = (records.length > 50) ? 50 : records.length;
+  document.getElementById("previewModalTitle").innerHTML = `Showing first ${maxRecordCount} records of uploaded report.`;
   var keys = Object.keys(records[0]);
-  for(var i = 0; i< 9; i++) {
+  for(var i = 0; i< keys.length; i++) {
     document.getElementById("previewHeaderRow").innerHTML += "<th>"+keys[i]+"</th>";
   }
   
@@ -179,8 +200,13 @@ function didClickOnPreviewButton() {
   for(var j = 0; j < maxRecordCount; j++) {
     var record = records[j];
     bodyString  += `<tr>`;
-    for(var k = 0; k<9; k++) {
-     bodyString  += `<td>${record[keys[k]]}</td>`;
+    for(var k = 0; k<keys.length; k++) {
+      if(keys[k] === "Month") {
+        
+        bodyString  += `<td>${getFormattedDate(record[keys[k]] - 1)}</td>`;
+      } else {
+        bodyString  += `<td>${record[keys[k]]}</td>`;
+      } 
     }
     bodyString  += `</tr>`;
   }
