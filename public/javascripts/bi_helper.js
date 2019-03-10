@@ -2,6 +2,7 @@
 var clients;
 var labels;
 var numberOfClients = 1;
+var parsedReportJson;
 
 // Webservice Calls
 function getLabelAndClients() {
@@ -43,6 +44,26 @@ function populateControl() {
   });
   updateDealsControl(labels[0].vendor);
   updateServiceControl1(clients[0].client);
+}
+
+function progress(e) {
+  if (e.lengthComputable) {
+    var max = e.total;
+    var current = e.loaded;
+    var percentComplete = (current * 100) / max;
+    console.log(percentComplete);
+
+    document.getElementById("uploadProgressBar").style = `width: ${percentComplete}%`
+    document.getElementById("uploadProgressBar").innerHTML = percentComplete + '%';
+  
+    if (percentComplete >= 100) {
+      setTimeout(function() {
+        document.getElementById("uploadProgressBar").style.visibility = "hidden";
+        $('#previewButton').prop("disabled", false);
+        $("#previewButton").html('Preview');
+      }, 1500);
+    }
+  }
 }
 
 // Action Methods
@@ -108,6 +129,62 @@ function didClickOnRemoveClient(rowId) {
   document.getElementById("clientRow" + rowId).innerHTML = "";
   document.getElementById("clientRow" + rowId).style = "";
   numberOfClients -= 1;
+}
+
+function didClickOnUploadButton()  {
+  var file_data = $('#excel').prop('files')[0];   
+  var form_data = new FormData();                  
+  form_data.append('file', file_data);
+  
+  document.getElementById("uploadProgressBar").style = `width: 0%`;
+  document.getElementById("uploadProgressBar").innerHTML = '0%';
+  document.getElementById("uploadProgressBar").style.visibility = "visible";
+
+  $.ajax({
+      url: '/landing/uploadReport', // point to server-side PHP script 
+      dataType: 'text',  // what to expect back from the PHP script, if anything
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: form_data,                         
+      type: 'post',
+      headers: {
+        authorization: sessionStorage.getItem("token")
+      },
+      xhr: function () {
+        var myXhr = $.ajaxSettings.xhr();
+        if (myXhr.upload) {
+          myXhr.upload.addEventListener('progress', progress,false);
+        }
+        return myXhr;
+      },
+      success: function(response){
+          parsedReportJson = JSON.parse(response); 
+      }
+   });
+}
+
+function didClickOnPreviewButton() {
+  document.getElementById("previewHeaderRow").innerHTML = "";
+  document.getElementById("previewTableBody").innerHTML = "";
+  $('#previewModal').modal('toggle');
+  var records = parsedReportJson.data[2];  
+  var maxRecordCount = (records.length > 50) ? 50 : records.length;
+  var keys = Object.keys(records[0]);
+  for(var i = 0; i< 9; i++) {
+    document.getElementById("previewHeaderRow").innerHTML += "<th>"+keys[i]+"</th>";
+  }
+  
+  var bodyString = "";
+  for(var j = 0; j < maxRecordCount; j++) {
+    var record = records[j];
+    bodyString  += `<tr>`;
+    for(var k = 0; k<9; k++) {
+     bodyString  += `<td>${record[keys[k]]}</td>`;
+    }
+    bodyString  += `</tr>`;
+  }
+  document.getElementById("previewTableBody").innerHTML = bodyString;
 }
 
 // On Change Event Listeners

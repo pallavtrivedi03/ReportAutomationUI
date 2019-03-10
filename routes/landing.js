@@ -1,6 +1,18 @@
 const express = require('express');
-const router = express.Router();
+const multer = require('multer');
 const biController = require('../controllers/bi_controller');
+
+const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'reports')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+});
+const upload = multer({storage: storage});
 
 router.get('/', function(req, res, next) {
     res.render('404');
@@ -31,21 +43,13 @@ router.get('/labelsAndClients', function(req, res, next) {
   biController.getLabelsAndClients(req,res);
 });
 
-router.post("/uploadReport", upload.single('fileName'), function (req, res) {
-
-  console.log("Request received");
-  //text fields
-  console.log(req.body);
+router.post("/uploadReport", upload.single('file'), function (req, res) {
 
   //file contents
   console.log(req.file);
-
-  console.log(String(req.file.buffer));
- 
-  res.json({status: 200, message: "Success"});
+ console.log("Path is "+req.file.path);
+ biController.getPreviewData(res,req.file.path);
 
 });
-
-
 
 module.exports = router;
