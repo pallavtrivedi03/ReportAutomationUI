@@ -81,6 +81,7 @@
                         <div class="container">
                                 <div class="reportUploadForm">
                                         <form method="POST" action="/landing/submitReport" id="reportSubmissionForm">
+                                                <input type="text" id="clientCount" name="clientCount" value="1" hidden/>
                                                 <div class="row" style="margin-top:12px;">
                                                         <div class="col-md-4">
                                                                 <span class="form-label">Select Label</span>
@@ -136,11 +137,11 @@
                                                         <div class="col-md-3">
                                                                 <span class="form-label">Report Type</span>
                                                                 <div class="radio" style="margin-top:12px;">
-                                                                        <label><input type="radio" name="reportType"
+                                                                        <label><input type="radio" name="reportType" value="Complete"
                                                                                         checked>Complete</label>
                                                                         <label style="margin-left: 16px;"><input
                                                                                         type="radio"
-                                                                                        name="reportType">Partial</label>
+                                                                                        name="reportType" value="Partial">Partial</label>
                                                                 </div>
                                                         </div>
                                                         <div class="col-md-3">
@@ -289,7 +290,8 @@
                                 data: form.serialize(),
                                 headers: {
                                         authorization: sessionStorage.getItem("token"),
-                                        reportJson: parsedReportJson
+                                        path: parsedReportJson.path,
+                                        data: parsedReportJson.data[2]
                                 },
                                 success: function (response) {
                                         if (response.status == 200) {

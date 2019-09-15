@@ -143,12 +143,14 @@ function didClickOnAddClient() {
     });
   }
   numberOfClients += 1;
+  document.getElementById("clientCount").value = numberOfClients
 }
 
 function didClickOnRemoveClient(rowId) {
   document.getElementById("clientRow" + rowId).innerHTML = "";
   document.getElementById("clientRow" + rowId).style = "";
   numberOfClients -= 1;
+  document.getElementById("clientCount").value = numberOfClients
 }
 
 function didClickOnUploadButton()  {

@@ -73,6 +73,70 @@ module.exports.getPreviewData = async function (res, path) {
 
 }
 
+
+module.exports.submitReport = function (headers, params, response) {
+  console.log("check");
+  
+  let path = headers.path;
+  let jsonData = headers.data;
+  let label = params.labelSelectControl;
+  let deal = params.dealSelectControl;
+  let type = params.reportType;
+  let from = params.fromDateField;
+  let to = params.toDateField;
+
+  let clientCount = parseInt(params.clientCount);
+  var clients = [];
+  for(var i=1; i<=clientCount; i++) {
+    let clientNameKey = "clientSelectControl"+i;
+    let serviceNameKey = "serviceSelectControl"+i;
+    let originNameKey = "originSelectControl"+i;
+    
+    var client = {client:params[clientNameKey],service:params[serviceNameKey],origin:params[originNameKey] };
+    clients.push(client);
+  }
+  
+  // res.json({status:200,message:"Success"});
+  // fetch({
+  //   query: `mutation {
+  //     createReport(reportInput: 
+  //       {
+  //         label:"Binaca", 
+  //         deal:"Some Deal", 
+  //         type:"Complete",
+  //         from:"12/12/2018",
+  //         to:"1/12/2019",
+  //         path:"path/to/report",
+  //         reportJson:"someJsonToBeStored",
+  //         clients:	[
+  //           {
+  //             client:"Airtel",
+  //             service:"Music",
+  //             origin:"India"
+  //           }
+  //         ]
+  //       }) {
+  //       label,
+  //       from,
+  //       to,
+  //       type,
+  //       clients {
+  //         client
+  //       }
+  //     }
+  //   }`
+  // }).then(res => {
+  //   if (res.data) {
+  //     let labels = res.data.labels;
+      
+  //   } else {
+  //     console.log(res.errors[0].message);
+  //     response.json({ status: 500, message: res.errors[0].message });
+  //   }
+  // });
+};
+
+
 function getParsedSheet(sheet) {
   var json = xlsx.utils.sheet_to_json(sheet, {cellDates:true, cellNF:false, cellText:false});
   return json;
